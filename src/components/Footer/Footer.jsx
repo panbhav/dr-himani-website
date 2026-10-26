@@ -36,7 +36,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="credit-link"
           >
-            PixelToCloud
+            PixelToCloud (pixeltocloud.com)
           </a>
         </span>
         <span>Appointments and available services are confirmed by the clinic.</span>
