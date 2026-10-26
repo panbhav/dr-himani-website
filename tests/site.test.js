@@ -11,7 +11,7 @@ function restore(search, hash = '') {
   vm.runInNewContext(restoreSource, {
     URL,
     window: {
-      location: { search, hash, pathname: '/dr-himani/', origin: 'https://panbhav.github.io' },
+      location: { search, hash, pathname: '/', origin: 'https://drhimani.pixeltocloud.com' },
       history: { replaceState(_state, _unused, path) { destination = path; } },
     },
   });
@@ -19,23 +19,23 @@ function restore(search, hash = '') {
 }
 
 test('legacy deep links retain their route, query and section without leaving the site', () => {
-  assert.equal(restore('?/specialties&ref=clinic~and~source=web', '#endoscopy'), '/dr-himani/specialties?ref=clinic&source=web#endoscopy');
+  assert.equal(restore('?/specialties&ref=clinic~and~source=web', '#endoscopy'), '/specialties?ref=clinic&source=web#endoscopy');
   assert.equal(restore('?ordinary=query'), null);
   assert.equal(restore('?/%2e%2e/outside'), null);
-  assert.equal(restore('?//other.example/path'), '/dr-himani//other.example/path');
+  assert.equal(restore('?//other.example/path'), null);
 });
 
 test('GitHub 404 fallback round-trips deep links and keeps navigation on the project origin', () => {
   let destination;
   vm.runInNewContext(redirectSource, {
     window: { location: {
-      pathname: '/dr-himani/specialties', search: '?ref=clinic&from=web', hash: '#endoscopy',
+      pathname: '/specialties', search: '?ref=clinic&from=web', hash: '#endoscopy',
       replace(value) { destination = value; },
     } },
   });
-  assert.equal(destination, '/dr-himani/?/specialties&ref=clinic~and~from=web#endoscopy');
-  const query = destination.slice('/dr-himani/'.length).split('#')[0];
-  assert.equal(restore(query, '#endoscopy'), '/dr-himani/specialties?ref=clinic&from=web#endoscopy');
+  assert.equal(destination, '/?/specialties&ref=clinic~and~from=web#endoscopy');
+  const query = destination.slice('/'.length).split('#')[0];
+  assert.equal(restore(query, '#endoscopy'), '/specialties?ref=clinic&from=web#endoscopy');
 });
 
 test('sitemap lists exactly the current canonical public pages and robots advertises it', async () => {
@@ -45,5 +45,5 @@ test('sitemap lists exactly the current canonical public pages and robots advert
   assert.equal(new Set(urls).size, 4);
   const robots = await readFile(new URL('../public/robots.txt', import.meta.url), 'utf8');
   assert.match(robots, /User-agent: \*/);
-  assert.match(robots, /Sitemap: https:\/\/panbhav.github.io\/dr-himani\/sitemap.xml/);
+  assert.match(robots, /Sitemap: https:\/\/drhimani\.pixeltocloud\.com\/sitemap\.xml/);
 });

@@ -1,6 +1,7 @@
 // Restore legacy GitHub Pages deep links without navigating off this origin.
 (function (location) {
   if (location.search[1] !== '/') return;
+  if (/(?:^|[/?&])(?:\.\.|%2e%2e)(?:[/?&#]|$)/i.test(location.search)) return;
   var restored = location.search.slice(1).split('&').map(function (part) {
     return part.replace(/~and~/g, '&');
   }).join('?');

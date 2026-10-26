@@ -1,4 +1,4 @@
-export const SITE_URL = 'https://panbhav.github.io/dr-himani/';
+export const SITE_URL = 'https://drhimani.pixeltocloud.com/';
 
 export const PAGE_METADATA = {
   '/': {

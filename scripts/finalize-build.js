@@ -26,8 +26,8 @@ for (const [path, metadata] of Object.entries(PAGE_METADATA)) {
   await writeFile(resolve(directory, 'index.html'), html);
   paths.push(pageUrl(path));
   if (/<script(?![^>]*type="application\/ld\+json")[^>]*>\s*[^<\s]/.test(html)) throw new Error('Executable inline script found');
-  const assetUrls = [...html.matchAll(/(?:src|href)="(\/dr-himani\/[^"#?]+)"/g)].map(match => match[1]);
-  for (const asset of assetUrls) await access(resolve(output, asset.slice('/dr-himani/'.length)));
+  const assetUrls = [...html.matchAll(/(?:src|href)="(\/(?:assets\/|favicon\.svg)[^"#?]*)"/g)].map(match => match[1]);
+  for (const asset of assetUrls) await access(resolve(output, asset.slice(1)));
   if (!html.includes('http-equiv="Content-Security-Policy"')) throw new Error('Production CSP missing');
 }
 
@@ -42,4 +42,5 @@ if (!template.includes('drhimanigynae@gmail.com') || template.includes('himanibh
 const fallback = await readFile(resolve(output, '404.html'), 'utf8');
 if (!fallback.includes('name="robots" content="noindex, follow"') || !fallback.includes('Content-Security-Policy')) throw new Error('404 protections missing');
 await access(resolve(output, 'redirect-path.js'));
+await access(resolve(output, 'CNAME'));
 console.log(`Verified ${paths.length} page entry files, route metadata, CSP, referenced HTML assets, sitemap and robots.txt.`);

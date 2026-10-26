@@ -34,7 +34,7 @@ The homepage includes a connected, date-free career milestone overview and a thr
 
 ## Deployment
 
-The existing GitHub Actions workflow builds on Node.js 24 and publishes `dist/` to GitHub Pages when `main` is pushed. The configured repository target is `https://panbhav.github.io/dr-himani/`; live deployment has not been verified in this redesign task.
+The existing GitHub Actions workflow builds on Node.js 24 and publishes `dist/` to GitHub Pages when `main` is pushed. The configured repository target is `https://drhimani.pixeltocloud.com/`; live deployment has not been verified in this redesign task.
 
 Before changing to a custom domain, update Vite's `base`, favicon path, sitemap URLs, robots sitemap location, `src/data/site.js`, and the `base` path in `public/redirect-path.js`. The router derives its base from Vite, including the trailing slash for home links.
 
